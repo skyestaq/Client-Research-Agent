@@ -1,85 +1,58 @@
 # Client Research Agent
 
-An AI-powered tool for gathering company intelligence before client meetings.
+AI-powered client intelligence tool for consulting meetings. Features real-time web search, AI analysis, and professional briefing generation.
 
 ## Features
 
 - **Real Web Search**: Searches for recent company news, financial updates, and AI trends
+- **Location Targeting**: City/State/Zip input to disambiguate companies
 - **AI Analysis**: Uses Anthropic's Claude API to analyze findings and generate insights
 - **Professional Briefings**: Creates structured markdown reports with key insights, pain points, and conversation starters
-- **Automated Output**: Saves timestamped briefing files for easy reference
+- **Web Interface**: Streamlit app with professional UI and download functionality
+- **CLI Tool**: Command-line version for quick research
 
-## Setup
+## Quick Start
 
-1. **Create Virtual Environment**:
-   ```bash
-   python3 -m venv venv
-   source venv/bin/activate  # On Windows: venv\Scripts\activate
-   ```
+### Web App (Recommended)
+```bash
+# Setup
+python3 -m venv venv
+source venv/bin/activate
+pip install -r requirements.txt
+cp .env.example .env  # Add your Anthropic API key
 
-2. **Install Dependencies**:
-   ```bash
-   pip install -r requirements.txt
-   ```
+# Run
+streamlit run app.py
+```
+Open http://localhost:8501
 
-3. **Set Up API Key** (Optional but recommended):
-   ```bash
-   cp .env.example .env
-   # Edit .env and add your Anthropic API key
-   ```
-
-   Get your API key from: https://console.anthropic.com/
-
-4. **Run the Script**:
-   ```bash
-   python3 client_research_agent.py
-   ```
+### CLI Tool
+```bash
+python3 client_research_agent.py
+```
 
 ## Usage
 
-1. Enter the company name when prompted
-2. Specify the meeting type (discovery/follow-up/proposal)
-3. The script will:
-   - Search for recent company information
-   - Analyze findings with AI (if API key is configured)
-   - Generate a professional briefing
-   - Save it as a markdown file
+1. **Enter company details**: Name and location (optional)
+2. **Select meeting type**: discovery/follow-up/proposal  
+3. **Generate research**: Real-time web search with progress tracking
+4. **Download briefing**: Professional markdown report with insights
 
 ## Output
 
-Creates a comprehensive briefing with:
+Creates comprehensive briefings with:
 - Key company insights
 - Potential AI pain points to explore
 - Strategic conversation starters
 - Meeting preparation checklist
 - Next steps recommendations
 
-## Example
+## Deployment
 
-```bash
-$ python3 client_research_agent.py
-🤖 Client Research Prep Agent
-========================================
-Company name: Tesla
-Meeting type: discovery
-
-🔍 Researching Tesla for discovery meeting...
-🔍 Searching for recent news...
-🔍 Searching for financial updates...
-🔍 Searching for ai trends...
-🧠 Analyzing findings...
-📝 Generating briefing...
-
-✅ Research complete!
-📄 Briefing saved as: tesla_briefing_20240831_1430.md
-```
-
-## Notes
-
-- Works without API key (uses fallback analysis)
-- Real-time web search results
-- Respects search rate limits
-- Professional output format
-- Saves all briefings for reference
+Deploy the web app to:
+- **Streamlit Cloud** (free)
+- **Railway** (`railway deploy`)  
+- **Heroku** (`git push heroku main`)
+- **Render** (connect GitHub repo)
 
 Perfect for AI consultants preparing for client meetings!
