@@ -19,10 +19,16 @@ import io
 load_dotenv()
 
 class ClientResearchAgent:
-    def __init__(self):
+    def __init__(self, api_key: str = None):
         self.anthropic_client = None
-        if os.getenv('ANTHROPIC_API_KEY'):
-            self.anthropic_client = anthropic.Anthropic(api_key=os.getenv('ANTHROPIC_API_KEY'))
+        # Try API key from parameter first, then environment variable
+        key_to_use = api_key or os.getenv('ANTHROPIC_API_KEY')
+        if key_to_use:
+            try:
+                self.anthropic_client = anthropic.Anthropic(api_key=key_to_use)
+            except Exception as e:
+                st.error(f"Invalid API key: {e}")
+                self.anthropic_client = None
     
     def search_company_info(self, company_name: str, location: str = "") -> Dict[str, Any]:
         """Search for company information using web search"""
@@ -128,7 +134,7 @@ class ClientResearchAgent:
         try:
             with st.spinner("🧠 Analyzing findings with AI..."):
                 message = self.anthropic_client.messages.create(
-                    model="claude-3-sonnet-20240229",
+                    model="claude-3-5-sonnet-20241022",
                     max_tokens=1000,
                     messages=[{"role": "user", "content": prompt}]
                 )
@@ -213,20 +219,45 @@ def main():
     with st.sidebar:
         st.header("📋 Configuration")
         
+        # API Key Input
+        st.markdown("### 🔑 Anthropic API Key")
+        api_key = st.text_input(
+            "API Key (Optional)",
+            type="password",
+            placeholder="sk-ant-api03-...",
+            help="Enter your Anthropic API key for AI-powered analysis. Leave blank to use basic analysis."
+        )
+        
         # API Key Status
-        if os.getenv('ANTHROPIC_API_KEY'):
-            st.success("✅ Anthropic API Key Configured")
+        if api_key:
+            if api_key.startswith('sk-ant-'):
+                st.success("✅ API Key Format Valid")
+                st.caption("AI analysis will be enabled")
+            else:
+                st.error("❌ Invalid API Key Format")
+                st.caption("Should start with 'sk-ant-'")
+        elif os.getenv('ANTHROPIC_API_KEY'):
+            st.info("🔧 Using Environment Variable")
             st.caption("AI analysis enabled")
         else:
-            st.warning("⚠️ No Anthropic API Key")
+            st.warning("⚠️ No API Key Provided")
             st.caption("Using fallback analysis")
         
         st.markdown("---")
-        st.markdown("### 🔧 Setup Instructions")
-        st.markdown("1. Add API key to `.env` file")
-        st.markdown("2. Enter company details")
-        st.markdown("3. Click 'Generate Research'")
-        st.markdown("4. Download briefing file")
+        st.markdown("### 🔒 Security Note")
+        st.caption("API keys are not stored or logged. They're only used for this session.")
+        
+        st.markdown("---")
+        st.markdown("### 🆓 Get API Key")
+        st.markdown("[Get Free API Key](https://console.anthropic.com/)")
+        st.caption("Anthropic offers free tier with generous limits")
+        
+        st.markdown("---")
+        st.markdown("### 📖 Instructions")
+        st.markdown("1. Enter API key (optional)")
+        st.markdown("2. Fill company details")
+        st.markdown("3. Generate research")
+        st.markdown("4. Download briefing")
     
     # Main interface
     col1, col2 = st.columns([1, 1])
@@ -277,8 +308,8 @@ def main():
         location_text = f" in {location}" if location.strip() else ""
         st.header(f"🔍 Researching {company_name}{location_text}")
         
-        # Initialize agent
-        agent = ClientResearchAgent()
+        # Initialize agent with API key from sidebar
+        agent = ClientResearchAgent(api_key=api_key)
         
         # Perform research
         search_results = agent.search_company_info(company_name, location)
