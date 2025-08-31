@@ -210,6 +210,110 @@ def main():
         initial_sidebar_state="expanded"
     )
     
+    # Custom CSS styling
+    st.markdown("""
+    <style>
+    /* Main app background */
+    .stApp {
+        background-color: #333447;
+    }
+    
+    /* Sidebar background */
+    .css-1d391kg {
+        background-color: #333447;
+    }
+    
+    /* Header text styling */
+    .stTitle, h1, h2, h3 {
+        color: #D8C3A5 !important;
+    }
+    
+    /* Main content area */
+    .main .block-container {
+        background-color: #333447;
+    }
+    
+    /* Text inputs styling */
+    .stTextInput > div > div > input {
+        background-color: #CC6651;
+        color: white;
+        border: 1px solid #D8C3A5;
+    }
+    
+    /* Select box styling */
+    .stSelectbox > div > div > div {
+        background-color: #CC6651;
+        color: white;
+    }
+    
+    /* Button styling */
+    .stButton > button {
+        background-color: #CC6651;
+        color: white;
+        border: 1px solid #D8C3A5;
+    }
+    
+    .stButton > button:hover {
+        background-color: #D8C3A5;
+        color: #333447;
+        border: 1px solid #CC6651;
+    }
+    
+    /* Sidebar elements */
+    .stSidebar .stTextInput > div > div > input {
+        background-color: #CC6651;
+        color: white;
+        border: 1px solid #D8C3A5;
+    }
+    
+    /* Progress bar */
+    .stProgress > div > div > div > div {
+        background-color: #CC6651;
+    }
+    
+    /* Success/warning/error messages */
+    .stSuccess, .stWarning, .stError, .stInfo {
+        background-color: rgba(204, 102, 81, 0.1);
+        border-left: 4px solid #CC6651;
+    }
+    
+    /* Markdown content */
+    .stMarkdown {
+        color: white;
+    }
+    
+    /* Download button */
+    .stDownloadButton > button {
+        background-color: #CC6651;
+        color: white;
+        border: 1px solid #D8C3A5;
+    }
+    
+    .stDownloadButton > button:hover {
+        background-color: #D8C3A5;
+        color: #333447;
+    }
+    
+    /* Expandable sections */
+    .streamlit-expanderHeader {
+        background-color: #CC6651;
+        color: white;
+    }
+    
+    /* Code blocks */
+    .stCode {
+        background-color: #CC6651;
+        color: white;
+    }
+    
+    /* Metric cards */
+    .css-1xarl3l {
+        background-color: rgba(204, 102, 81, 0.1);
+        border: 1px solid #CC6651;
+    }
+    </style>
+    """, unsafe_allow_html=True)
+    
     # Header
     st.title("🤖 Client Research Agent")
     st.markdown("*AI-powered client intelligence for consulting meetings*")
