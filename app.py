@@ -134,7 +134,7 @@ class ClientResearchAgent:
         try:
             with st.spinner("🧠 Analyzing findings with AI..."):
                 message = self.anthropic_client.messages.create(
-                    model="claude-3-5-sonnet-20241022",
+                    model="claude-sonnet-4-20250514",
                     max_tokens=1000,
                     messages=[{"role": "user", "content": prompt}]
                 )
@@ -230,21 +230,21 @@ def main():
     h1, .stTitle {
         font-family: 'Montserrat Alternates', sans-serif !important;
         font-weight: 600 !important;
-        font-size: 4rem !important;
-        letter-spacing: -1px !important;
-        color: var(--highland-sand) !important;
+        font-size: 2.67rem !important;
+        letter-spacing: -0.5px !important;
+        color: var(--glen-fire) !important;
     }
 
     /* H2-H6: Section headers - Manrope Semibold 600 */
     h2, h3, h4, h5, h6, .stHeader {
         font-family: 'Manrope', sans-serif !important;
         font-weight: 600 !important;
-        color: var(--highland-sand) !important;
+        color: var(--glen-fire) !important;
     }
 
     h2 {
-        font-size: 3rem !important;
-        letter-spacing: -1px !important;
+        font-size: 2rem !important;
+        letter-spacing: -0.5px !important;
     }
 
     /* Body text - Arial/Helvetica with enhanced readability */
@@ -252,12 +252,12 @@ def main():
         font-family: Arial, Helvetica, sans-serif !important;
         font-size: 1.125rem !important;
         line-height: 1.7 !important;
-        color: var(--white) !important;
+        color: var(--summit-slate) !important;
     }
 
     /* ==================== Main App Layout ==================== */
     .stApp {
-        background: linear-gradient(135deg, var(--summit-slate) 0%, #4a4b5f 100%);
+        background-color: var(--highland-sand);
     }
 
     /* Main content area with proper spacing */
@@ -266,17 +266,102 @@ def main():
         padding-bottom: 3rem;
         padding-left: 2rem;
         padding-right: 2rem;
+        background-color: var(--highland-sand);
+    }
+
+    /* Header/Title area - Summit Slate background */
+    header[data-testid="stHeader"] {
+        background-color: var(--summit-slate) !important;
+    }
+
+    /* Top toolbar area */
+    [data-testid="stToolbar"] {
+        background-color: var(--summit-slate) !important;
+    }
+
+    /* Main title section background */
+    .main .block-container > div:first-child {
+        background-color: var(--summit-slate);
+        margin: -3rem -2rem 1rem -2rem;
+        padding: 2rem 2rem 1.5rem 2rem;
+        border-radius: 0 0 16px 16px;
+    }
+
+    /* Subtitle/italics in title section - keep white on dark background */
+    .main .block-container > div:first-child em,
+    .main .block-container > div:first-child .stMarkdown em {
+        color: var(--highland-sand) !important;
+    }
+
+    /* Reduce spacing after divider following title */
+    .main .block-container > div:first-child hr {
+        margin-bottom: 0.5rem !important;
     }
 
     /* ==================== Sidebar Styling ==================== */
     .css-1d391kg, [data-testid="stSidebar"] {
         background-color: var(--summit-slate);
         padding: 2rem 1rem;
+        width: 400px !important;
+        min-width: 400px !important;
     }
 
-    [data-testid="stSidebar"] h2,
+    /* Sidebar headings - reduced sizes for legibility */
+    [data-testid="stSidebar"] h2 {
+        color: var(--glen-fire) !important;
+        font-size: 1.5rem !important;
+        letter-spacing: 0px !important;
+        margin-bottom: 0.5rem !important;
+        margin-top: 0.5rem !important;
+    }
+
     [data-testid="stSidebar"] h3 {
         color: var(--glen-fire) !important;
+        font-size: 1.25rem !important;
+        letter-spacing: 0px !important;
+        margin-top: 0.75rem !important;
+        margin-bottom: 0.5rem !important;
+    }
+
+    /* Sidebar text and labels - keep white text in sidebar */
+    [data-testid="stSidebar"] p,
+    [data-testid="stSidebar"] label,
+    [data-testid="stSidebar"] div,
+    [data-testid="stSidebar"] span,
+    [data-testid="stSidebar"] .stMarkdown {
+        font-size: 0.95rem !important;
+        line-height: 1.5 !important;
+        color: var(--white) !important;
+    }
+
+    /* Sidebar captions - keep light color */
+    [data-testid="stSidebar"] .stCaption {
+        font-size: 0.85rem !important;
+        color: var(--highland-sand) !important;
+    }
+
+    /* Sidebar logo - 50% width, centered */
+    [data-testid="stSidebar"] img {
+        width: 50% !important;
+        margin-left: auto !important;
+        margin-right: auto !important;
+        display: block !important;
+        margin-bottom: 0.5rem !important;
+    }
+
+    /* Sidebar dividers - tighter spacing */
+    [data-testid="stSidebar"] hr {
+        margin-top: 0.5rem !important;
+        margin-bottom: 0.5rem !important;
+    }
+
+    /* Sidebar status messages - tighter spacing */
+    [data-testid="stSidebar"] .stSuccess,
+    [data-testid="stSidebar"] .stInfo,
+    [data-testid="stSidebar"] .stWarning,
+    [data-testid="stSidebar"] .stError {
+        margin-bottom: 0.25rem !important;
+        padding: 0.5rem !important;
     }
 
     /* ==================== Input Elements ==================== */
@@ -472,49 +557,54 @@ def main():
     """, unsafe_allow_html=True)
     
     # Header
-    st.title("🤖 Client Research Agent")
+    st.title("Client Research Agent")
     st.markdown("*AI-powered client intelligence for consulting meetings*")
     st.markdown("---")
     
     # Sidebar
     with st.sidebar:
-        st.header("📋 Configuration")
-        
+        # Logo
+        st.image("logo.png", use_container_width=True)
+        st.markdown("---")
+
+        st.markdown("## LLM Configuration")
+
         # API Key Input
         st.markdown("### 🔑 Anthropic API Key")
         api_key = st.text_input(
-            "API Key (Optional)",
+            "Anthropic API Key",
             type="password",
             placeholder="sk-ant-api03-...",
-            help="Enter your Anthropic API key for AI-powered analysis. Leave blank to use basic analysis."
+            help="Enter your Anthropic API key for AI-powered analysis. Leave blank to use basic analysis.",
+            label_visibility="collapsed"
         )
-        
+
         # API Key Status
         if api_key:
             if api_key.startswith('sk-ant-'):
-                st.success("✅ API Key Format Valid")
+                st.success("API Key Format Valid")
                 st.caption("AI analysis will be enabled")
             else:
-                st.error("❌ Invalid API Key Format")
+                st.error("Invalid API Key Format")
                 st.caption("Should start with 'sk-ant-'")
         elif os.getenv('ANTHROPIC_API_KEY'):
-            st.info("🔧 Using Environment Variable")
+            st.info("Using Environment Variable")
             st.caption("AI analysis enabled")
         else:
-            st.warning("⚠️ No API Key Provided")
+            st.warning("No API Key Provided")
             st.caption("Using fallback analysis")
-        
+
         st.markdown("---")
-        st.markdown("### 🔒 Security Note")
+        st.markdown("### Security Note")
         st.caption("API keys are not stored or logged. They're only used for this session.")
-        
+
         st.markdown("---")
-        st.markdown("### 🆓 Get API Key")
+        st.markdown("### Get API Key")
         st.markdown("[Get Free API Key](https://console.anthropic.com/)")
         st.caption("Anthropic offers free tier with generous limits")
-        
+
         st.markdown("---")
-        st.markdown("### 📖 Instructions")
+        st.markdown("### Instructions")
         st.markdown("1. Enter API key (optional)")
         st.markdown("2. Fill company details")
         st.markdown("3. Generate research")
@@ -524,7 +614,7 @@ def main():
     col1, col2 = st.columns([1, 1])
     
     with col1:
-        st.header("📝 Meeting Details")
+        st.header("Meeting Details")
         
         # Input form
         company_name = st.text_input(
@@ -553,7 +643,7 @@ def main():
         )
     
     with col2:
-        st.header("📊 Research Status")
+        st.header("Research Status")
         
         # Status area
         if not company_name.strip():
@@ -567,7 +657,7 @@ def main():
     if generate_button and company_name.strip():
         st.markdown("---")
         location_text = f" in {location}" if location.strip() else ""
-        st.header(f"🔍 Researching {company_name}{location_text}")
+        st.header(f"Researching {company_name}{location_text}")
         
         # Initialize agent with API key from sidebar
         agent = ClientResearchAgent(api_key=api_key)
