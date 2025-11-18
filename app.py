@@ -210,106 +210,263 @@ def main():
         initial_sidebar_state="expanded"
     )
     
-    # Custom CSS styling
+    # Custom CSS styling - SkyeStaq Brand Guidelines
     st.markdown("""
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat+Alternates:wght@600&family=Manrope:wght@600&display=swap" rel="stylesheet">
+
     <style>
-    /* Main app background */
+    /* ==================== CSS Variables - Brand Colors ==================== */
+    :root {
+        --summit-slate: #333447;
+        --glen-fire: #CC6651;
+        --highland-sand: #D8C3A5;
+        --white: #ffffff;
+        --light-bg: #f9f8f6;
+        --light-gray: #e8e6e2;
+    }
+
+    /* ==================== Typography - Brand Guidelines ==================== */
+    /* H1: Main headers - Montserrat Alternates Semibold 600 */
+    h1, .stTitle {
+        font-family: 'Montserrat Alternates', sans-serif !important;
+        font-weight: 600 !important;
+        font-size: 4rem !important;
+        letter-spacing: -1px !important;
+        color: var(--highland-sand) !important;
+    }
+
+    /* H2-H6: Section headers - Manrope Semibold 600 */
+    h2, h3, h4, h5, h6, .stHeader {
+        font-family: 'Manrope', sans-serif !important;
+        font-weight: 600 !important;
+        color: var(--highland-sand) !important;
+    }
+
+    h2 {
+        font-size: 3rem !important;
+        letter-spacing: -1px !important;
+    }
+
+    /* Body text - Arial/Helvetica with enhanced readability */
+    body, .stMarkdown, p, div, span, label {
+        font-family: Arial, Helvetica, sans-serif !important;
+        font-size: 1.125rem !important;
+        line-height: 1.7 !important;
+        color: var(--white) !important;
+    }
+
+    /* ==================== Main App Layout ==================== */
     .stApp {
-        background-color: #333447;
+        background: linear-gradient(135deg, var(--summit-slate) 0%, #4a4b5f 100%);
     }
-    
-    /* Sidebar background */
-    .css-1d391kg {
-        background-color: #333447;
-    }
-    
-    /* Header text styling */
-    .stTitle, h1, h2, h3 {
-        color: #D8C3A5 !important;
-    }
-    
-    /* Main content area */
+
+    /* Main content area with proper spacing */
     .main .block-container {
-        background-color: #333447;
+        padding-top: 3rem;
+        padding-bottom: 3rem;
+        padding-left: 2rem;
+        padding-right: 2rem;
     }
-    
-    /* Text inputs styling */
+
+    /* ==================== Sidebar Styling ==================== */
+    .css-1d391kg, [data-testid="stSidebar"] {
+        background-color: var(--summit-slate);
+        padding: 2rem 1rem;
+    }
+
+    [data-testid="stSidebar"] h2,
+    [data-testid="stSidebar"] h3 {
+        color: var(--glen-fire) !important;
+    }
+
+    /* ==================== Input Elements ==================== */
+    /* Text inputs with proper spacing */
     .stTextInput > div > div > input {
-        background-color: #CC6651;
-        color: white;
-        border: 1px solid #D8C3A5;
+        background-color: var(--white);
+        color: var(--summit-slate);
+        border: 2px solid var(--light-gray);
+        border-radius: 8px;
+        padding: 0.75rem 1rem;
+        font-size: 1.125rem;
+        transition: all 0.3s ease;
     }
-    
+
+    .stTextInput > div > div > input:focus {
+        border-color: var(--glen-fire);
+        box-shadow: 0 0 0 3px rgba(204, 102, 81, 0.1);
+    }
+
     /* Select box styling */
+    .stSelectbox > div > div {
+        background-color: var(--white);
+        border-radius: 8px;
+    }
+
     .stSelectbox > div > div > div {
-        background-color: #CC6651;
-        color: white;
+        color: var(--summit-slate);
+        padding: 0.75rem 1rem;
     }
-    
-    /* Button styling */
+
+    /* ==================== Buttons - Brand Styled CTAs ==================== */
+    /* Primary button - Glen Fire */
     .stButton > button {
-        background-color: #CC6651;
-        color: white;
-        border: 1px solid #D8C3A5;
+        background-color: var(--glen-fire);
+        color: var(--white);
+        border: none;
+        border-radius: 8px;
+        padding: 0.75rem 2rem;
+        font-weight: 600;
+        font-size: 1.125rem;
+        transition: all 0.3s ease;
+        box-shadow: 0 4px 12px rgba(204, 102, 81, 0.2);
     }
-    
+
     .stButton > button:hover {
-        background-color: #D8C3A5;
-        color: #333447;
-        border: 1px solid #CC6651;
+        background-color: #d47561;
+        transform: translateY(-2px);
+        box-shadow: 0 6px 16px rgba(204, 102, 81, 0.3);
     }
-    
-    /* Sidebar elements */
-    .stSidebar .stTextInput > div > div > input {
-        background-color: #CC6651;
-        color: white;
-        border: 1px solid #D8C3A5;
-    }
-    
-    /* Progress bar */
-    .stProgress > div > div > div > div {
-        background-color: #CC6651;
-    }
-    
-    /* Success/warning/error messages */
-    .stSuccess, .stWarning, .stError, .stInfo {
-        background-color: rgba(204, 102, 81, 0.1);
-        border-left: 4px solid #CC6651;
-    }
-    
-    /* Markdown content */
-    .stMarkdown {
-        color: white;
-    }
-    
+
     /* Download button */
     .stDownloadButton > button {
-        background-color: #CC6651;
-        color: white;
-        border: 1px solid #D8C3A5;
+        background-color: var(--glen-fire);
+        color: var(--white);
+        border: none;
+        border-radius: 8px;
+        padding: 0.75rem 2rem;
+        font-weight: 600;
+        transition: all 0.3s ease;
+        box-shadow: 0 4px 12px rgba(204, 102, 81, 0.2);
     }
-    
+
     .stDownloadButton > button:hover {
-        background-color: #D8C3A5;
-        color: #333447;
+        background-color: #d47561;
+        transform: translateY(-2px);
+        box-shadow: 0 6px 16px rgba(204, 102, 81, 0.3);
     }
-    
+
+    /* ==================== Cards and Panels ==================== */
+    /* Content cards with brand-specified styling */
+    [data-testid="stExpander"],
+    [data-testid="stAlert"] {
+        background-color: rgba(255, 255, 255, 0.05);
+        border-radius: 16px;
+        padding: 1.5rem;
+        box-shadow: 0 10px 30px rgba(51, 52, 71, 0.1);
+        border: 1px solid rgba(216, 195, 165, 0.1);
+    }
+
     /* Expandable sections */
     .streamlit-expanderHeader {
-        background-color: #CC6651;
-        color: white;
-    }
-    
-    /* Code blocks */
-    .stCode {
-        background-color: #CC6651;
-        color: white;
-    }
-    
-    /* Metric cards */
-    .css-1xarl3l {
         background-color: rgba(204, 102, 81, 0.1);
-        border: 1px solid #CC6651;
+        color: var(--glen-fire) !important;
+        border-radius: 8px;
+        padding: 1rem;
+        font-weight: 600;
+    }
+
+    .streamlit-expanderHeader:hover {
+        background-color: rgba(204, 102, 81, 0.2);
+    }
+
+    /* ==================== Status Messages ==================== */
+    /* Success/Info/Warning/Error with proper brand styling */
+    .stSuccess {
+        background-color: rgba(204, 102, 81, 0.1);
+        border-left: 4px solid var(--glen-fire);
+        border-radius: 8px;
+        padding: 1rem;
+    }
+
+    .stInfo {
+        background-color: rgba(216, 195, 165, 0.1);
+        border-left: 4px solid var(--highland-sand);
+        border-radius: 8px;
+        padding: 1rem;
+    }
+
+    .stWarning {
+        background-color: rgba(255, 183, 77, 0.1);
+        border-left: 4px solid #ffb74d;
+        border-radius: 8px;
+        padding: 1rem;
+    }
+
+    .stError {
+        background-color: rgba(239, 83, 80, 0.1);
+        border-left: 4px solid #ef5350;
+        border-radius: 8px;
+        padding: 1rem;
+    }
+
+    /* ==================== Progress Indicators ==================== */
+    .stProgress > div > div > div > div {
+        background-color: var(--glen-fire);
+    }
+
+    .stSpinner > div {
+        border-top-color: var(--glen-fire) !important;
+    }
+
+    /* ==================== Dividers and Spacing ==================== */
+    hr {
+        border: none;
+        border-top: 2px solid var(--light-gray);
+        margin: 2rem 0;
+        opacity: 0.2;
+    }
+
+    /* ==================== Code and Pre-formatted Text ==================== */
+    .stCode, code, pre {
+        background-color: rgba(51, 52, 71, 0.8);
+        color: var(--highland-sand);
+        border-radius: 8px;
+        padding: 1rem;
+        border: 1px solid var(--light-gray);
+    }
+
+    /* ==================== Captions and Helper Text ==================== */
+    .stCaption, caption, small {
+        color: var(--highland-sand) !important;
+        font-size: 0.9rem !important;
+        line-height: 1.5 !important;
+    }
+
+    /* ==================== Links ==================== */
+    a {
+        color: var(--glen-fire) !important;
+        text-decoration: none;
+        transition: all 0.3s ease;
+    }
+
+    a:hover {
+        color: var(--highland-sand) !important;
+        text-decoration: underline;
+    }
+
+    /* ==================== Metric Cards ==================== */
+    [data-testid="stMetric"] {
+        background-color: rgba(255, 255, 255, 0.05);
+        border: 1px solid rgba(204, 102, 81, 0.2);
+        border-radius: 16px;
+        padding: 1.5rem;
+        box-shadow: 0 10px 30px rgba(51, 52, 71, 0.1);
+    }
+
+    /* ==================== Animations ==================== */
+    @keyframes fadeIn {
+        from {
+            opacity: 0;
+            transform: translateY(20px);
+        }
+        to {
+            opacity: 1;
+            transform: translateY(0);
+        }
+    }
+
+    .main .block-container > div {
+        animation: fadeIn 0.8s ease;
     }
     </style>
     """, unsafe_allow_html=True)
